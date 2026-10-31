@@ -1,0 +1,1255 @@
+/* ============================================================
+   K_Habba.css — Karunada Habba Premium 3D Cultural Experience
+   Theme: Royal Mysore Crimson & Heritage Gold
+   Mobile-First · Fluid clamp() · Touch-Optimized
+   ============================================================ */
+
+/* ── DESIGN TOKENS ──────────────────────────────────────── */
+:root {
+  --crimson-deep: #4A0404;
+  --crimson:      #780808;
+  --crimson-mid:  #8E1010;
+  --crimson-glow: rgba(142, 16, 16, 0.28);
+  --gold-deep:    #A37A17;
+  --gold:         #D4AF37;
+  --gold-light:   #F3E5AB;
+  --gold-glow:    rgba(212, 175, 55, 0.35);
+  
+  --bg-silk:      #FAF7F0;
+  --bg-card:      #FFFFFF;
+  --bg-subtle:    #F4EEDD;
+  --border-warm:  #E8DCBE;
+  --border-gold:  rgba(212, 175, 55, 0.45);
+  
+  --text-dark:    #1E140E;
+  --text-muted:   #6C594A;
+  --text-dim:     #8C7869;
+  --text-white:   #FFFFFF;
+
+  /* 3D Shadows */
+  --shadow-3d-sm: 0 4px 12px rgba(74, 4, 4, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --shadow-3d-md: 0 10px 28px -4px rgba(74, 4, 4, 0.14), 0 3px 8px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --shadow-3d-lg: 0 20px 42px -6px rgba(74, 4, 4, 0.22), 0 6px 14px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── RESET & BASE ────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-silk);
+  color: var(--text-dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+.kn { font-family: 'Noto Sans Kannada', sans-serif; }
+.serif { font-family: 'Cinzel', Georgia, serif; }
+
+/* ── RESPONSIVE CONTAINER ────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4.5vw, 24px);
+}
+
+.section {
+  padding: clamp(38px, 7vw, 64px) 0;
+  position: relative;
+}
+
+.section.alt-bg {
+  background: var(--bg-subtle);
+  border-top: 1px solid var(--border-warm);
+  border-bottom: 1px solid var(--border-warm);
+}
+
+/* ── TOP FLAG ACCENT BAR ─────────────────────────────────── */
+.karnataka-bar {
+  height: 5px;
+  width: 100%;
+  background: linear-gradient(90deg, #FFC400 0%, #FFC400 50%, #C62828 50%, #C62828 100%);
+  position: sticky;
+  top: 0;
+  z-index: 1002;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ── NAVIGATION BAR ──────────────────────────────────────── */
+.site-nav {
+  position: sticky;
+  top: 5px;
+  z-index: 1000;
+  background: rgba(250, 247, 240, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-warm);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.nav-wrapper {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 9px clamp(12px, 3.5vw, 20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--crimson);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: clamp(0.92rem, 3.2vw, 1.05rem);
+  flex-shrink: 0;
+}
+
+.nav-brand-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--gold-deep);
+  flex-shrink: 0;
+}
+
+.nav-pills {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 0;
+}
+
+.nav-pills::-webkit-scrollbar { display: none; }
+
+.nav-pill {
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-decoration: none;
+  background: rgba(142, 16, 16, 0.04);
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.nav-pill:hover,
+.nav-pill.active {
+  background: #FFF0CC;
+  color: var(--crimson);
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+/* ── HERO SECTION ────────────────────────────────────────── */
+.hero-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid var(--gold);
+  background-color: var(--crimson-deep);
+  min-height: clamp(400px, 80vw, 560px);
+  display: flex;
+  align-items: flex-end;
+  color: var(--text-white);
+}
+
+.hero-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: brightness(0.48) saturate(1.2);
+  transform: scale(1.02);
+}
+
+.hero-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(74, 4, 4, 0.3) 0%, rgba(35, 3, 3, 0.75) 60%, rgba(18, 1, 1, 0.95) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: clamp(24px, 5vw, 42px) 0 clamp(36px, 7vw, 54px);
+  text-align: center;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 225, 120, 0.45);
+  backdrop-filter: blur(8px);
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  font-size: clamp(0.68rem, 2.2vw, 0.74rem);
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: #FFF2C2;
+  margin-bottom: 12px;
+}
+
+.hero-title-kn {
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  color: #FFE680;
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero-title-en {
+  font-size: clamp(2.4rem, 8.5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text-white);
+  line-height: 1.05;
+  margin-bottom: 12px;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+.hero-sub {
+  font-size: clamp(0.85rem, 2.6vw, 0.96rem);
+  color: #F8E6C8;
+  max-width: 480px;
+  margin: 0 auto 20px;
+  line-height: 1.55;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.hero-tag {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  backdrop-filter: blur(6px);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  color: #FFF8E6;
+}
+
+.hero-tag strong {
+  color: #FFDE59;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ── 3D BUTTONS ──────────────────────────────────────────── */
+.btn-3d-gold {
+  background: linear-gradient(135deg, #FFC400 0%, #D4AF37 100%);
+  color: #4A0404;
+  font-weight: 800;
+  font-size: 0.88rem;
+  padding: 11px 24px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #FFE799;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-spring);
+}
+
+.btn-3d-gold:hover, .btn-3d-gold:active {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(212, 175, 55, 0.45);
+}
+
+.btn-3d-ghost {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-white);
+  font-weight: 700;
+  font-size: 0.86rem;
+  padding: 11px 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.btn-3d-ghost:hover, .btn-3d-ghost:active {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+
+/* ── HUMBLE WELCOME NOTE CARD (3D ELEVATION) ─────────────── */
+.humble-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-gold);
+  box-shadow: var(--shadow-3d-lg);
+  overflow: hidden;
+  margin-top: -30px;
+  position: relative;
+  z-index: 10;
+  transform: translateZ(0);
+}
+
+.humble-card-stripe {
+  height: 5px;
+  background: linear-gradient(90deg, var(--gold), var(--crimson), #FFC400);
+}
+
+.humble-card-body {
+  padding: clamp(22px, 5vw, 32px);
+}
+
+.humble-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--crimson);
+  background: #FFF2D1;
+  border: 1px solid #EBD59B;
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+}
+
+.humble-lead {
+  font-size: clamp(1.05rem, 3.4vw, 1.25rem);
+  font-weight: 700;
+  color: var(--crimson);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.humble-text {
+  font-size: clamp(0.86rem, 2.4vw, 0.94rem);
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+.humble-quote-box {
+  background: #FFFDF4;
+  border-left: 3px solid var(--gold);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 12px 16px;
+  font-style: italic;
+  color: #5F4200;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin: 16px 0;
+}
+
+.humble-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.stat-tile {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: 12px 6px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: clamp(1.2rem, 3.8vw, 1.5rem);
+  font-weight: 800;
+  color: var(--crimson);
+  line-height: 1;
+}
+
+.stat-caption {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 700;
+}
+
+/* ── SECTION HEADERS & ORNAMENTS ─────────────────────────── */
+.section-header {
+  text-align: center;
+  margin-bottom: clamp(22px, 5vw, 32px);
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--crimson);
+  background: #FEEBC4;
+  border: 1px solid #E6CA82;
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: clamp(1.55rem, 5vw, 2.1rem);
+  font-weight: 800;
+  color: var(--crimson);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.section-desc {
+  font-size: clamp(0.85rem, 2.4vw, 0.94rem);
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.svg-ornament-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  color: var(--gold);
+}
+
+.svg-ornament-line::before,
+.svg-ornament-line::after {
+  content: "";
+  height: 1px;
+  width: 45px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+
+.svg-ornament-line::after {
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+
+/* ── 3D TOURIST PLACE CARDS (VISUAL-RICH) ─────────────────── */
+.places-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 520px) {
+  .places-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .place-card-3d.featured {
+    grid-column: 1 / -1;
+  }
+}
+
+.place-card-3d {
+  background: #000000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-3d-md);
+  border: 1px solid var(--border-gold);
+  position: relative;
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.place-card-3d:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-3d-lg);
+  border-color: #FFC400;
+}
+
+.place-img-holder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.place-card-3d.featured .place-img-holder {
+  aspect-ratio: 16 / 9;
+}
+
+.place-img-holder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-smooth);
+  filter: brightness(0.92) contrast(1.05);
+}
+
+.place-card-3d:hover .place-img-holder img {
+  transform: scale(1.05);
+}
+
+.place-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(14, 4, 4, 0.95) 0%, rgba(20, 5, 5, 0.4) 55%, transparent 100%);
+}
+
+.place-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: clamp(14px, 3.5vw, 20px);
+  color: var(--text-white);
+}
+
+.place-title-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.place-name {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-weight: 800;
+  color: var(--text-white);
+  line-height: 1.2;
+}
+
+.place-name-kn {
+  font-size: 0.8rem;
+  color: #FFE580;
+  font-weight: 600;
+}
+
+.place-snip {
+  font-size: clamp(0.76rem, 2.2vw, 0.82rem);
+  color: #F0E6D8;
+  line-height: 1.5;
+  margin: 6px 0 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.place-pill-tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #FFE799;
+  background: rgba(212, 175, 55, 0.25);
+  border: 1px solid rgba(255, 230, 120, 0.45);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── 3D CULTURE CARDS ────────────────────────────────────── */
+.culture-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.cult-3d-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: clamp(16px, 3.8vw, 20px);
+  box-shadow: var(--shadow-3d-sm);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: all 0.22s var(--ease-smooth);
+}
+
+.cult-3d-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-3d-md);
+  border-color: var(--gold);
+}
+
+.cult-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #FFF4D9;
+  border: 1px solid #EED491;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--crimson);
+}
+
+.cult-icon-box svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cult-content-wrap h3 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--crimson);
+  margin-bottom: 4px;
+}
+
+.cult-content-wrap p {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── 3D HISTORY TABS ─────────────────────────────────────── */
+.tabs-scroll-bar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-bottom: 20px;
+  padding-bottom: 2px;
+}
+
+.tabs-scroll-bar::-webkit-scrollbar { display: none; }
+
+.tab-btn-pill {
+  padding: 7px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-warm);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s var(--ease-smooth);
+  box-shadow: var(--shadow-3d-sm);
+}
+
+.tab-btn-pill.active {
+  background: var(--crimson);
+  color: var(--text-white);
+  border-color: var(--crimson);
+  box-shadow: 0 4px 14px rgba(120, 8, 8, 0.3);
+}
+
+.dynasty-panel {
+  display: none;
+}
+
+.dynasty-panel.active {
+  display: grid;
+  gap: 12px;
+  animation: tabFadeIn 0.25s ease-out;
+}
+
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dynasty-card-3d {
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: clamp(16px, 4vw, 20px);
+  box-shadow: var(--shadow-3d-sm);
+}
+
+.dynasty-timeline {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 3px;
+}
+
+.dynasty-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--crimson);
+  margin-bottom: 6px;
+}
+
+.dynasty-desc {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.62;
+}
+
+/* ── KANNADA LANGUAGE CARD ───────────────────────────────── */
+.kannada-feature-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-warm);
+  padding: clamp(18px, 4vw, 24px);
+  box-shadow: var(--shadow-3d-sm);
+  margin-bottom: 14px;
+}
+
+.kannada-feature-card p {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+.kannada-feature-card p + p {
+  margin-top: 10px;
+}
+
+.lang-stat-pills {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.stat-chip {
+  flex: 1;
+  min-width: 100px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.stat-chip-num {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--crimson);
+  line-height: 1.1;
+}
+
+.stat-chip-lbl {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* ── PHRASEBOOK GRID (TAP TO HEAR) ───────────────────────── */
+.phrase-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.phrase-card-3d {
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: clamp(12px, 3vw, 16px) clamp(10px, 3vw, 14px);
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-3d-sm);
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.phrase-card-3d:hover,
+.phrase-card-3d:active {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  background: #FFFDF5;
+  box-shadow: var(--shadow-3d-md);
+}
+
+.phrase-kannada {
+  font-size: clamp(1.05rem, 3.5vw, 1.25rem);
+  font-weight: 700;
+  color: var(--crimson);
+  margin-bottom: 2px;
+}
+
+.phrase-trans {
+  font-size: 0.74rem;
+  color: var(--gold-deep);
+  font-style: italic;
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+
+.phrase-meaning {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.phrase-tap-badge {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #7A5300;
+  background: #FEEBC4;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid #E6CA82;
+}
+
+/* ── FESTIVE DINNER MENU (3D CARDS) ──────────────────────── */
+.menu-filter-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filter-btn-3d {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-warm);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s var(--ease-smooth);
+  box-shadow: var(--shadow-3d-sm);
+}
+
+.filter-btn-3d.active,
+.filter-btn-3d:hover {
+  background: var(--crimson);
+  color: var(--text-white);
+  border-color: var(--crimson);
+  box-shadow: 0 4px 12px rgba(120, 8, 8, 0.28);
+}
+
+.menu-cards-grid {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 540px) {
+  .menu-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.menu-item-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-3d-sm);
+  transition: all 0.22s var(--ease-smooth);
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-3d-md);
+  border-color: var(--gold);
+}
+
+.item-top-header {
+  padding: 12px 14px 10px;
+  background: #FFFDF9;
+  border-bottom: 1px dashed var(--border-warm);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.item-name-en {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--crimson);
+  line-height: 1.2;
+}
+
+.item-name-kn {
+  font-size: 0.82rem;
+  color: var(--gold-deep);
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.item-course-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: #FFF2CC;
+  color: #8A6400;
+  border: 1px solid #ECC759;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.item-main-body {
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.item-short-desc {
+  font-size: 0.82rem;
+  color: var(--text-dark);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.item-heritage-lore {
+  background: #FAF3E3;
+  border-left: 3px solid var(--crimson-mid);
+  padding: 8px 10px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.75rem;
+  color: #5C3C00;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.item-heritage-lore strong {
+  color: var(--crimson);
+}
+
+.item-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.diet-pill {
+  font-size: 0.65rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: #F1ECE2;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.diet-pill.crimson {
+  background: #FFEBEB;
+  color: var(--crimson);
+}
+
+.diet-pill.gold {
+  background: #FFF3CC;
+  color: #7A5300;
+}
+
+/* ── TRIVIA FLIP / 3D CARDS ──────────────────────────────── */
+.trivia-deck {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 520px) {
+  .trivia-deck {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.trivia-tile {
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: clamp(14px, 4vw, 18px);
+  box-shadow: var(--shadow-3d-sm);
+}
+
+.trivia-top-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--gold-deep);
+  margin-bottom: 6px;
+}
+
+.trivia-header-text {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--crimson);
+  margin-bottom: 5px;
+}
+
+.trivia-body-text {
+  font-size: 0.81rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── EVENT DETAILS BOX ───────────────────────────────────── */
+.event-card-3d {
+  background: linear-gradient(135deg, #FFFDF5 0%, #FFF8E6 100%);
+  border: 2px solid var(--gold);
+  border-radius: var(--radius-lg);
+  padding: clamp(22px, 5.5vw, 34px);
+  box-shadow: var(--shadow-3d-md);
+}
+
+.event-sub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+@media (min-width: 500px) {
+  .event-sub-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.ev-stat-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+
+.ev-stat-label {
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-weight: 800;
+  color: var(--crimson);
+  margin-bottom: 2px;
+}
+
+.ev-stat-main {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.ev-stat-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.organizers-wrapper {
+  border-top: 1px dashed var(--border-warm);
+  margin-top: 16px;
+  padding-top: 14px;
+}
+
+.organizers-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--crimson);
+  margin-bottom: 8px;
+}
+
+.organizer-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.org-tag {
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.74rem;
+  font-weight: 500;
+}
+
+.org-tag a {
+  color: var(--crimson);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* ── MOBILE QUICK DOCK (FLOATING 3D PILL) ────────────────── */
+.mobile-bottom-dock {
+  position: fixed;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(74, 4, 4, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid var(--gold);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  z-index: 999;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.dock-action-btn {
+  color: #FFE68A;
+  background: none;
+  border: none;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 6px 11px;
+  border-radius: 18px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s var(--ease-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.dock-action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.dock-action-btn:hover,
+.dock-action-btn.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--text-white);
+}
+
+/* ── TOAST NOTIFICATION ──────────────────────────────────── */
+.toast-notice {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-90px);
+  background: #1B4D1F;
+  color: var(--text-white);
+  padding: 9px 22px;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 700;
+  z-index: 2000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  white-space: nowrap;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toast-notice.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── CONFETTI CANVAS ─────────────────────────────────────── */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.site-footer {
+  background: #140703;
+  color: #D8CCC0;
+  padding: clamp(38px, 6vw, 56px) clamp(16px, 4vw, 24px) 80px;
+  text-align: center;
+  border-top: 3px solid var(--gold);
+}
+
+.footer-shloka {
+  font-size: clamp(0.92rem, 3.2vw, 1.05rem);
+  color: #FFE580;
+  margin-bottom: 4px;
+  line-height: 1.6;
+}
+
+.footer-poet {
+  font-size: 0.76rem;
+  color: #C8A870;
+  margin-bottom: 12px;
+}
+
+.footer-quote-en {
+  font-style: italic;
+  color: #C8BEB2;
+  font-size: 0.86rem;
+  margin-bottom: 16px;
+}
+
+.footer-hr-line {
+  width: 60px;
+  height: 1px;
+  background: rgba(212, 175, 55, 0.35);
+  margin: 14px auto;
+}
+
+.footer-credits-text {
+  font-size: 0.76rem;
+  color: #7A6354;
+  line-height: 1.7;
+}
+
+/* ── PRINT COMPATIBILITY ─────────────────────────────────── */
+@media print {
+  .site-nav,
+  .mobile-bottom-dock,
+  #confetti-canvas,
+  .hero-actions,
+  .menu-filter-row {
+    display: none !important;
+  }
+  .place-card-3d,
+  .menu-item-card,
+  .humble-card {
+    box-shadow: none !important;
+    border: 1px solid #CCC !important;
+    page-break-inside: avoid;
+  }
+}
