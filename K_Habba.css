@@ -785,12 +785,15 @@ body {
 }
 
 .phrase-card-3d {
+  appearance: none;
+  width: 100%;
   background: var(--bg-card);
   border: 1px solid var(--border-warm);
   border-radius: var(--radius-md);
   padding: clamp(12px, 3vw, 16px) clamp(10px, 3vw, 14px);
   text-align: center;
   cursor: pointer;
+  font: inherit;
   box-shadow: var(--shadow-3d-sm);
   transition: all 0.2s var(--ease-smooth);
 }
@@ -801,6 +804,24 @@ body {
   transform: translateY(-2px);
   background: #FFFDF5;
   box-shadow: var(--shadow-3d-md);
+}
+
+.phrase-card-3d:focus-visible {
+  outline: 3px solid var(--gold-deep);
+  outline-offset: 3px;
+}
+
+.phrase-card-3d.playing {
+  border-color: var(--crimson);
+  background: #FFF9E6;
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.28), var(--shadow-3d-md);
+  transform: translateY(-2px);
+}
+
+.phrase-card-3d.playing .phrase-tap-badge {
+  background: var(--crimson);
+  color: #FFFFFF;
+  border-color: var(--crimson);
 }
 
 .phrase-kannada {

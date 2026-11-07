@@ -70,19 +70,127 @@ function filterMenu(category) {
 }
 
 // ── 4. Voice / Speech Pronunciation Guide ────────────────────
-function speakPhrase(phraseText) {
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(phraseText);
-    utterance.rate = 0.88;
-    const voices = window.speechSynthesis.getVoices();
-    const knVoice = voices.find(
-      (v) => v.lang.startsWith('kn') || v.lang === 'en-IN' || v.lang.includes('IN')
-    );
-    if (knVoice) utterance.voice = knVoice;
-    window.speechSynthesis.speak(utterance);
+let activePhraseAudio = null;
+let activePhraseCard = null;
+
+function stopCurrentPhraseAudio() {
+  if (activePhraseAudio) {
+    try {
+      activePhraseAudio.pause();
+      activePhraseAudio.currentTime = 0;
+    } catch (_) {}
+    activePhraseAudio = null;
   }
-  showToast(`Pronounced: "${phraseText}"`);
+  if (activePhraseCard) {
+    activePhraseCard.classList.remove('playing');
+    const badge = activePhraseCard.querySelector('.phrase-tap-badge');
+    if (badge) badge.textContent = '🔊 Tap to hear';
+    activePhraseCard = null;
+  }
+}
+
+function speakPhrase(phraseCard) {
+  const kannadaPhrase = phraseCard.querySelector('.phrase-kannada')?.textContent?.trim();
+  const transliteration = phraseCard.querySelector('.phrase-trans')?.textContent?.trim();
+  const audioSrc = phraseCard.getAttribute('data-audio');
+
+  // Toggle off if currently playing this exact card
+  if (activePhraseCard === phraseCard) {
+    stopCurrentPhraseAudio();
+    return;
+  }
+
+  // Stop any other currently playing phrase audio
+  stopCurrentPhraseAudio();
+
+  if (audioSrc) {
+    const audio = new Audio(audioSrc);
+    activePhraseAudio = audio;
+    activePhraseCard = phraseCard;
+
+    phraseCard.classList.add('playing');
+    const badge = phraseCard.querySelector('.phrase-tap-badge');
+    if (badge) badge.textContent = '🔊 Playing...';
+
+    audio.play()
+      .then(() => {
+        showToast(kannadaPhrase || 'Pronouncing in authentic Kannada');
+      })
+      .catch((err) => {
+        console.warn('Direct audio play failed, falling back:', err);
+        stopCurrentPhraseAudio();
+        fallbackSpeechSynthesis(kannadaPhrase, transliteration);
+      });
+
+    audio.onended = () => {
+      stopCurrentPhraseAudio();
+    };
+
+    audio.onerror = () => {
+      stopCurrentPhraseAudio();
+      fallbackSpeechSynthesis(kannadaPhrase, transliteration);
+    };
+    return;
+  }
+
+  fallbackSpeechSynthesis(kannadaPhrase, transliteration);
+}
+
+function getAvailableSpeechVoices() {
+  const voices = window.speechSynthesis?.getVoices() || [];
+  if (voices.length) return Promise.resolve(voices);
+
+  return new Promise((resolve) => {
+    if (!('speechSynthesis' in window)) return resolve([]);
+    const timeout = setTimeout(() => {
+      window.speechSynthesis.removeEventListener('voiceschanged', onVoicesChanged);
+      resolve(window.speechSynthesis.getVoices());
+    }, 1200);
+    const onVoicesChanged = () => {
+      clearTimeout(timeout);
+      window.speechSynthesis.removeEventListener('voiceschanged', onVoicesChanged);
+      resolve(window.speechSynthesis.getVoices());
+    };
+    window.speechSynthesis.addEventListener('voiceschanged', onVoicesChanged);
+  });
+}
+
+async function fallbackSpeechSynthesis(kannadaPhrase, transliteration) {
+  if (!('speechSynthesis' in window)) {
+    showToast('Speech playback is not supported by this browser.');
+    return;
+  }
+
+  if (!kannadaPhrase || !transliteration) {
+    showToast('Could not find the Kannada phrase to pronounce.');
+    return;
+  }
+
+  const voices = await getAvailableSpeechVoices();
+  const knVoice = voices.find((voice) => voice.lang.toLowerCase() === 'kn-in')
+    || voices.find((voice) => voice.lang.toLowerCase().startsWith('kn'));
+  const indianEnglishVoice = voices.find((voice) => voice.lang.toLowerCase() === 'en-in');
+  const otherIndianVoice = voices.find(
+    (voice) => /(?:^|[-_])in$/i.test(voice.lang) && !voice.lang.toLowerCase().startsWith('kn')
+  );
+  const fallbackVoice = indianEnglishVoice || otherIndianVoice;
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(knVoice ? kannadaPhrase : transliteration);
+  utterance.lang = knVoice ? 'kn-IN' : (fallbackVoice?.lang || 'en-IN');
+  if (knVoice || fallbackVoice) utterance.voice = knVoice || fallbackVoice;
+  utterance.rate = 0.88;
+  window.speechSynthesis.speak(utterance);
+
+  if (knVoice) {
+    showToast('Speaking in Kannada.');
+  } else if (indianEnglishVoice) {
+    showToast('Using an Indian English voice for Kannada pronunciation.');
+  } else if (otherIndianVoice) {
+    showToast(`Using ${otherIndianVoice.lang} voice for Kannada pronunciation.`);
+  } else {
+    showToast('No Indian voice is installed; using your device default voice.');
+  }
 }
 
 // ── 5. Toast Notification System ─────────────────────────────
@@ -178,7 +286,20 @@ if ('speechSynthesis' in window) {
   window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
 
+// Preload phrase audio for instantaneous playback
+function preloadPhraseAudios() {
+  document.querySelectorAll('.phrase-card-3d[data-audio]').forEach((card) => {
+    const src = card.getAttribute('data-audio');
+    if (src) {
+      const audio = new Audio();
+      audio.preload = 'auto';
+      audio.src = src;
+    }
+  });
+}
+
 // ── 8. Initialize on Load ────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initNavScroll();
+  preloadPhraseAudios();
 });

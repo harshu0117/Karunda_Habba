@@ -1,5 +1,3 @@
-*
-!.gitignore
-!K_Habba*
-!images/
-!images/**
+generated_slides/
+.system_generated/
+*.log
